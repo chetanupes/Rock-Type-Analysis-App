@@ -1,22 +1,22 @@
 import pandas as pd
 import numpy as np
+#Streamlit
 import streamlit as st
 from streamlit_pandas_profiling import st_profile_report
 st.set_page_config(layout="wide")
 
-
+#Plotting
 import seaborn as sns
 import plotly.express as px
 from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
-from sklearn.mixture import GaussianMixture
-from sklearn import mixture
-from sklearn import metrics
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
+plt.style.use('seaborn')
+
+#Warnings
 import warnings
 warnings.filterwarnings('ignore', category=DeprecationWarning)
-plt.style.use('seaborn')
 
 #Widgets libraries
 import ipywidgets as wd
@@ -25,10 +25,20 @@ from ipywidgets import interactive
 
 #Data Analysis Library
 from pandas_profiling import ProfileReport
+from sklearn.mixture import GaussianMixture
+from sklearn import mixture
+from sklearn import metrics
+from sklearn.impute import KNNImputer
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.cluster import KMeans
+from sklearn.mixture import GaussianMixture
+from sklearn import metrics
+from sklearn.metrics import silhouette_score
+#############################################################################################################
 
 st.title('Rock Type Analysis')
 
-st.text('Data analysis for computing the Rock Type using unsupervised learning techniques')
+st.text('Data analysis for computing the Rock Type using KMeans & GMM unsupervised learning techniques')
 
 st.title('Dataset Report')
 
@@ -43,7 +53,6 @@ if st.checkbox('Preview Profile Report'):
 
 #Data Cleaning
 # k-NN to determine the missing Gamma Ray values
-from sklearn.impute import KNNImputer
 df=well_log.loc[:,['GammaRay(API)','ShaleVolume','Resistivity','Sonic']]
 imputer=KNNImputer(n_neighbors=2,weights='uniform')
 well_log['GammaRay_imputed']=imputer.fit_transform(df)[:,0]
@@ -63,19 +72,13 @@ df=well_log.drop(columns=['NeutronPorosity','GammaRay(API)','Depth(m)'])
 
 #Rock type Analysis
 # Preprocessing the dataset
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from sklearn.cluster import KMeans
-from sklearn.mixture import GaussianMixture
-from sklearn import metrics
-from sklearn.metrics import silhouette_score
-
 X=df
 scale = StandardScaler()
 x_scaled = scale.fit_transform(X)
 well_logs_scaled = pd.DataFrame(x_scaled)
 
 # Selecting the method for analysis   
-st.title('Analysis Method')
+st.title('Select Analysis Method')
 
 Select_Method=st.selectbox('Select an Analysis Method', ('KMean','GMM'))
 
@@ -135,7 +138,7 @@ def cluster_analysis(ana):
 
         #Visualizing the cluster for KMeans
         fig1 = px.line(x=n_clusters,y=sils).update_traces(mode='lines+markers')
-        fig1.update_layout(showlegend=True, height=500, width=1000,title_text='Silhouette Plot')
+        fig1.update_layout(showlegend=True, height=700, width=700,title_text='Silhouette Plot')
 
         # Update axis properties
         fig1.update_yaxes(title_text='Score')
@@ -173,8 +176,7 @@ def plot_cluster(ana):
         # Projecting the well log features into 2d projection using t-SNE
 
         fig2=px.scatter(well_logs_scaled_embedded,x=0, y=1, color=well_log.KMean, labels={'color': 'KMean'})
-        fig2.update_layout(showlegend=True, height=500, width=1000,title_text='t-SNE 2D Projection')
-        fig2.update_layout(showlegend=True,height=500, width=1000)
+        fig2.update_layout(showlegend=True, height=1000, width=1000,title_text='t-SNE 2D Projection')
 
         # Plot!
         st.plotly_chart(fig2, use_container_width=True)
@@ -189,8 +191,7 @@ def plot_cluster(ana):
         # Projecting the well log features into 2d projection using t-SNE
 
         fig3=px.scatter(well_logs_scaled_embedded,x=0, y=1, color=well_log.GMM, labels={'color': 'GMM'})
-        fig3.update_layout(showlegend=True, height=500, width=1000,title_text='t-SNE 2D Projection of well logs')
-        fig3.update_layout(showlegend=True,height=500, width=1000)
+        fig3.update_layout(showlegend=True, height=1000, width=1000,title_text='t-SNE 2D Projection of well logs')
 
         # Plot!
         st.plotly_chart(fig3, use_container_width=True)
@@ -257,7 +258,7 @@ def well_log_display(top_depth,bottom_depth,df,list_columns):
             fig5.update_xaxes(title_text='KMean',range=[0,max(sec['KMean'])],row=1, col=i+1, showticklabels=False)
             
         else:
-            fig5.append_trace(go.Bar(x=sec[list_columns[i]]+2, y=sec['Depth(m)_imputed'],name=list_columns[i],orientation='h', marker=dict(color=sec[list_columns[i]], coloraxis="coloraxis"),marker_coloraxis=None), row=1, col=i+1)
+            fig5.append_trace(go.Bar(x=sec[list_columns[i]]+20, y=sec['Depth(m)_imputed'],name=list_columns[i],orientation='h', marker=dict(color=sec[list_columns[i]], coloraxis="coloraxis"),marker_coloraxis=None), row=1, col=i+1)
             
             # Update axis properties
             fig5.update_xaxes(title_text='GMM',range=[0,max(sec['GMM'])],row=1, col=i+1, showticklabels=False)
