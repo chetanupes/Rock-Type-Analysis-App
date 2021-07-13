@@ -32,7 +32,7 @@ st.text('Data analysis for computing the Rock Type using unsupervised learning t
 
 st.title('Dataset Report')
 
-well_log=pd.read_csv('C:/Users/cheta/OneDrive - Georgia Institute of Technology/Desktop/Sound QI/Log Data.csv')
+well_log=pd.read_csv('Log Data.csv')
 
 #Creating a profile report
 
