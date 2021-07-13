@@ -2,6 +2,9 @@ import pandas as pd
 import numpy as np
 import streamlit as st
 from streamlit_pandas_profiling import st_profile_report
+st.set_page_config(layout="wide")
+
+
 import seaborn as sns
 import plotly.express as px
 from sklearn.manifold import TSNE
