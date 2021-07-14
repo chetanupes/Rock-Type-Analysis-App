@@ -155,7 +155,7 @@ cluster_analysis(Select_Method)
 
 st.title('Selecting Clusters')
 
-value = st.slider('Select a cluster value',1, 10)
+value = st.slider('Select a cluster value',2, 10)
 #st.write('Number of Clusters:', value)
 
 #Now we can do the analysis for both KMean and GMM
