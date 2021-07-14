@@ -38,7 +38,7 @@ from sklearn.metrics import silhouette_score
 
 st.title('Rock Type Analysis')
 
-st.text('Data analysis for computing the Rock Type using KMeans & GMM unsupervised learning techniques')
+st.text('Data analysis for computing the Rock Type using KMeans & GMM unsupervised learning techniques.')
 
 st.title('Dataset Report')
 
@@ -50,6 +50,7 @@ report=ProfileReport(well_log, title='Profiling Reoprt')
 
 if st.checkbox('Preview Profile Report'):
     st_profile_report(report)
+st.text('The profiling function presents the user with a descriptive statistical summary of all the features of the dataset.')
 
 #Data Cleaning
 # k-NN to determine the missing Gamma Ray values
@@ -78,9 +79,9 @@ x_scaled = scale.fit_transform(X)
 well_logs_scaled = pd.DataFrame(x_scaled)
 
 # Selecting the method for analysis   
-st.title('Select Analysis Method')
+st.title('Unsupervised Learning-KMeans & Gaussian Mixture (GMM)')
 
-Select_Method=st.selectbox('Select an Analysis Method', ('KMean','GMM'))
+Select_Method=st.selectbox('Select an Analysis Method', ('KMeans','GMM'))
 
 #Cluster selection
 
@@ -94,7 +95,7 @@ def SelBest(arr:list, X:int)->list:
 
 def cluster_analysis(ana):
     
-    if (ana=='KMean'):
+    if (ana=='KMeans'):
         inertias = []
         clusters_list = range(1,11)
         # Compute Inertia value for different number of cluster
@@ -165,7 +166,7 @@ well_logs_scaled_embedded = TSNE(n_components=2,learning_rate=200,random_state=1
 
 def plot_cluster(ana):
 
-    if (ana=='KMean'):
+    if (ana=='KMeans'):
         # k-means implementation with 3 clusters
         kmeans = KMeans(n_clusters=value)
         kmeans.fit(well_logs_scaled)
@@ -206,7 +207,7 @@ st.title('Displaying the Well-Logs')
 
 def analysis(ana):
     
-    if (ana=='KMean'):
+    if (ana=='KMeans'):
         # k-means implementation with 3 clusters
         kmeans = KMeans(n_clusters=value)
         kmeans.fit(well_logs_scaled)
@@ -274,7 +275,7 @@ def well_log_display(top_depth,bottom_depth,df,list_columns):
 
 def plotting(ana):
     
-    if (ana=='KMean'):
+    if (ana=='KMeans'):
         well_log_display(df_new['Depth(m)_imputed'].min(),df_new['Depth(m)_imputed'].max(), df_new, list_KMean)
     else:
         well_log_display(df_new['Depth(m)_imputed'].min(),df_new['Depth(m)_imputed'].max(), df_new, list_GMM)
