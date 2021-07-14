@@ -127,7 +127,7 @@ def cluster_analysis(ana):
         for n in n_clusters:
             tmp_sil=[]
             for _ in range(iterations):
-                gmm=GaussianMixture(n, n_init=2).fit(well_logs_scaled) 
+                gmm=GaussianMixture(n, n_init=2, random_state=40).fit(well_logs_scaled) 
                 labels=gmm.predict(well_logs_scaled)
                 sil=metrics.silhouette_score(well_logs_scaled, labels, metric='euclidean')
                 #print("finished sil")
@@ -138,7 +138,7 @@ def cluster_analysis(ana):
             sils_err.append(err)
 
         #Visualizing the cluster for KMeans
-        fig1 = px.line(x=n_clusters,y=sils).update_traces(mode='lines+markers')
+        fig1 = go.Figure(data=go.Scatter(x=n_clusters,y=sils,error_y=dict(type='data', array=sils_err,visible=True)))
         fig1.update_layout(showlegend=True, height=700, width=700,title_text='Silhouette Plot')
 
         # Update axis properties
