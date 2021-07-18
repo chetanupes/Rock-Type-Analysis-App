@@ -178,7 +178,7 @@ def plot_cluster(ana):
         # Projecting the well log features into 2d projection using t-SNE
 
         fig2=px.scatter(well_logs_scaled_embedded,x=0, y=1, color=well_log.KMean, labels={'color': 'KMean'})
-        fig2.update_layout(showlegend=True, height=1000, width=1000,title_text='t-SNE 2D Projection')
+        fig2.update_layout(showlegend=True, height=500, width=1000,title_text='t-SNE 2D Projection')
 
         # Plot!
         st.plotly_chart(fig2, use_container_width=True)
