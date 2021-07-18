@@ -3,7 +3,7 @@ import numpy as np
 #Streamlit
 import streamlit as st
 from streamlit_pandas_profiling import st_profile_report
-st.set_page_config(layout="wide")
+#st.set_page_config(layout="wide")
 
 #Plotting
 import seaborn as sns
@@ -79,9 +79,10 @@ x_scaled = scale.fit_transform(X)
 well_logs_scaled = pd.DataFrame(x_scaled)
 
 # Selecting the method for analysis   
-st.title('Unsupervised Learning-KMeans & Gaussian Mixture (GMM)')
+#st.title('Unsupervised Learning-KMeans & Gaussian Mixture (GMM)')
 
-Select_Method=st.selectbox('Select an Analysis Method', ('KMeans','GMM'))
+st.sidebar.markdown("# Machine Learning Models")
+Select_Method=st.sidebar.selectbox('Select an Model', ('KMeans','GMM'))
 
 #Cluster selection
 
@@ -153,9 +154,9 @@ def cluster_analysis(ana):
 st.title('Clusters Analysis for Selected Method')
 cluster_analysis(Select_Method)
 
-st.title('Selecting Clusters')
+st.sidebar.markdown("# Selecting Clusters")
 
-value = st.slider('Select a cluster value',2, 10)
+value = st.sidebar.slider('Select a cluster value',2, 10)
 #st.write('Number of Clusters:', value)
 
 #Now we can do the analysis for both KMean and GMM
@@ -192,7 +193,7 @@ def plot_cluster(ana):
         # Projecting the well log features into 2d projection using t-SNE
 
         fig3=px.scatter(well_logs_scaled_embedded,x=0, y=1, color=well_log.GMM, labels={'color': 'GMM'})
-        fig3.update_layout(showlegend=True, height=1000, width=1000,title_text='t-SNE 2D Projection of well logs')
+        fig3.update_layout(showlegend=False, height=1000, width=1000,title_text='t-SNE 2D Projection of well logs')
 
         # Plot!
         st.plotly_chart(fig3, use_container_width=True)
