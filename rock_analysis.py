@@ -254,7 +254,7 @@ def well_log_display(top_depth,bottom_depth,df,list_columns):
             fig5.update_xaxes(title_text=list_columns[i], row=1, col=i+1, type='log', range=[-1,.1])
             
         elif (list_columns[i]=='KMean'):
-            fig5.append_trace(go.Bar(x=sec[list_columns[i]]+2, y=sec['Depth(m)_imputed'],name=list_columns[i],orientation='h', marker=dict(color=sec[list_columns[i]], coloraxis="coloraxis"),marker_coloraxis=None), row=1, col=i+1)
+            fig5.append_trace(go.Bar(x=sec[list_columns[i]]+20, y=sec['Depth(m)_imputed'],name=list_columns[i],orientation='h', marker=dict(color=sec[list_columns[i]], coloraxis="coloraxis"),marker_coloraxis=None), row=1, col=i+1)
             
             # Update axis properties
             fig5.update_xaxes(title_text='KMean',range=[0,max(sec['KMean'])],row=1, col=i+1, showticklabels=False)
