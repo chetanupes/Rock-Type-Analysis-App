@@ -82,7 +82,7 @@ well_logs_scaled = pd.DataFrame(x_scaled)
 #st.title('Unsupervised Learning-KMeans & Gaussian Mixture (GMM)')
 
 st.sidebar.markdown("# Machine Learning Models")
-Select_Method=st.sidebar.selectbox('Select an Model', ('KMeans','GMM'))
+Select_Method=st.sidebar.selectbox('Select a Model', ('KMeans','GMM'))
 
 #Cluster selection
 
