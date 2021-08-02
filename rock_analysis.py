@@ -3,7 +3,7 @@ import numpy as np
 #Streamlit
 import streamlit as st
 from streamlit_pandas_profiling import st_profile_report
-#st.set_page_config(layout="wide")
+st.set_page_config(layout="wide")
 
 #Plotting
 import seaborn as sns
